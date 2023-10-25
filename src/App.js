@@ -11,26 +11,22 @@ const App = () => {
   const newAllowance = () => {
     setTotal(parseFloat(total) + parseFloat(allowance));
     if (allowance !== 0) {
-      setTransactions([...transactions, allowance]);
+      setTransactions([...transactions, { description: "Allowance", amount: parseFloat(allowance) }]);
     }
     setAllowance(0);
-  };
-
-  const addAllowance = (e) => {
-    setAllowance(e.target.value);
-  };
-
-
-  const addExpense = (e) => {
-    setExpense(e.target.value);
   };
 
   const newExpense = () => {
     setTotal(parseFloat(total) - parseFloat(expense));
     if (expense !== 0) {
-      setTransactions([...transactions, expense * -1]);
+      setTransactions([...transactions, { description: "Expense", amount: parseFloat(expense * -1) }]);
     }
     setExpense(0);
+  };
+
+  const tableStyles = {
+    border: "1px black solid",
+    margin: "0 auto", // Center the table
   };
 
   const savingsStyle = {
@@ -44,20 +40,20 @@ const App = () => {
   };
 
   const handleKeyPress = (e, focus) => {
-    if (e.key === 'Enter') {
-      if (focus === 'allowance') {
+    if (e.key === "Enter") {
+      if (focus === "allowance") {
         newAllowance();
-      } else if (focus === 'expense') {
+      } else if (focus === "expense") {
         newExpense();
       }
     }
-  }
+  };
 
   const inputStyle = {
     width: "80px",
-  marginRight: "10px",
-  padding: "5px",
-  borderRadius: "4px",
+    marginRight: "10px",
+    padding: "5px",
+    borderRadius: "4px",
     border: "1px solid #ccc",
   };
 
@@ -78,8 +74,8 @@ const App = () => {
             type="number"
             min="0"
             max="100"
-            onChange={addAllowance}
-            onKeyDown={((e) => handleKeyPress(e, 'allowance'))}
+            onChange={(e) => setAllowance(e.target.value)}
+            onKeyDown={(e) => handleKeyPress(e, "allowance")}
           />
         </label>
         <button type="button" onClick={newAllowance}>
@@ -95,26 +91,34 @@ const App = () => {
             type="number"
             min="0"
             max="100"
-            onChange={addExpense}
-            onKeyDown={((e) => handleKeyPress(e, 'expense'))}
+            onChange={(e) => setExpense(e.target.value)}
+            onKeyDown={(e) => handleKeyPress(e, "expense")}
           />
         </label>
         <button type="button" onClick={newExpense}>
           Enter
         </button>
-      </div>
-      <table>
-        <tr>
-          <th>Total</th>
-        </tr>
-        {transactions.map((value, index) => {
-          return (
-            <tr key = {index}>
-              <td>{value}</td>
+        <table style={tableStyles}>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Debit</th>
+              <th>Credit</th>
             </tr>
-          );
-        })}
-      </table>
+          </thead>
+          <tbody>
+            {transactions.map((transaction, index) => (
+              <tr key={index}>
+                {transactions.length > 0 ? <td>{new Date().toLocaleDateString()}</td> : <></>}
+                <td>{transaction.description}</td>
+                <td>{transaction.amount > 0 ? `$${transaction.amount.toFixed(2)}` : ""}</td>
+                <td>{transaction.amount < 0 ? `$${(transaction.amount * -1).toFixed(2)}` : ""}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
