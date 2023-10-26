@@ -103,6 +103,7 @@ const App = () => {
         <button type="button" onClick={newEntry}>
           Enter
         </button>
+        <div style={{paddingTop: "25px"}}>
         <table style={tableStyles}>
           <thead>
             <tr>
@@ -123,6 +124,7 @@ const App = () => {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );
