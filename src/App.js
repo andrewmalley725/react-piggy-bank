@@ -7,26 +7,37 @@ const App = () => {
   const [allowance, setAllowance] = useState(0);
   const [expense, setExpense] = useState(0);
   const [transactions, setTransactions] = useState([]);
+  const [description, setDescription] = useState('');
+  const [option, setOption] = useState('');
 
-  const newAllowance = () => {
-    setTotal(parseFloat(total) + parseFloat(allowance));
-    if (allowance !== 0) {
-      setTransactions([...transactions, { description: "Allowance", amount: parseFloat(allowance) }]);
+  const newEntry = (e) => {
+    if (option === 'allowance') {
+      setTotal(parseFloat(total) + parseFloat(allowance));
+      if (allowance !== 0) {
+        setTransactions([...transactions, { description: description, amount: parseFloat(allowance) }]);
+      }
+      setAllowance(0);
+      setDescription('');
     }
-    setAllowance(0);
-  };
 
-  const newExpense = () => {
-    setTotal(parseFloat(total) - parseFloat(expense));
-    if (expense !== 0) {
-      setTransactions([...transactions, { description: "Expense", amount: parseFloat(expense * -1) }]);
+    else if (option === 'expense') {
+      setTotal(parseFloat(total) - parseFloat(expense));
+      if (expense !== 0) {
+        setTransactions([...transactions, { description: description, amount: parseFloat(expense * -1) }]);
+      }
+      setExpense(0);
+      setDescription('');
     }
-    setExpense(0);
+    
+    else {
+      alert('Choose an option!')
+    }
+    
   };
 
   const tableStyles = {
     border: "1px black solid",
-    margin: "0 auto", // Center the table
+    margin: "0 auto",
   };
 
   const savingsStyle = {
@@ -39,13 +50,9 @@ const App = () => {
     color: total < GOAL ? "red" : "green",
   };
 
-  const handleKeyPress = (e, focus) => {
+  const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      if (focus === "allowance") {
-        newAllowance();
-      } else if (focus === "expense") {
-        newExpense();
-      }
+      newEntry();
     }
   };
 
@@ -66,36 +73,34 @@ const App = () => {
           : "You met your goal!"}
       </p>
       <div>
+        <select style={{marginRight: "10px",padding: "5px",borderRadius: "4px",border: "1px solid #ccc",}} onChange={(e) => setOption(e.target.value)}>
+          <option selected disabled>Select an option</option>
+          <option value='allowance'>Allowance</option>
+          <option value='expense'>Expense</option>
+        </select>
         <label>
-          Enter allowance:
+          Amount:
           <input
             style={inputStyle}
-            value={allowance}
+            value={option === 'allowance' ? allowance : expense}
             type="number"
             min="0"
             max="100"
-            onChange={(e) => setAllowance(e.target.value)}
-            onKeyDown={(e) => handleKeyPress(e, "allowance")}
-          />
-        </label>
-        <button type="button" onClick={newAllowance}>
-          Enter
-        </button>
-      </div>
-      <div>
-        <label>
-          Enter expense:
-          <input
-            style={inputStyle}
-            value={expense}
-            type="number"
-            min="0"
-            max="100"
-            onChange={(e) => setExpense(e.target.value)}
+            onChange={(e) => {option === 'allowance' ? setAllowance(e.target.value) : setExpense(e.target.value)}}
             onKeyDown={(e) => handleKeyPress(e, "expense")}
           />
         </label>
-        <button type="button" onClick={newExpense}>
+        <label>
+          Description:
+          <input
+            style={inputStyle}
+            value={description}
+            type="text"
+            onChange={(e) => setDescription(e.target.value)}
+            onKeyDown={(e) => handleKeyPress(e, "allowance")}
+          />
+        </label>
+        <button type="button" onClick={newEntry}>
           Enter
         </button>
         <table style={tableStyles}>
