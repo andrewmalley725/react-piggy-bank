@@ -1,3 +1,9 @@
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
+import {Button, FormControl, InputAdornment, InputLabel, MenuItem, OutlinedInput, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@mui/material';
 import React, { useState } from "react";
 
 const GOAL = 1000;
@@ -64,6 +70,18 @@ const App = () => {
     border: "1px solid #ccc",
   };
 
+  const renderAdornment = () => {
+    if (option === "expense") {
+      return (
+        <InputAdornment position="start">-$</InputAdornment>
+      )
+    } else {
+      return (
+        <InputAdornment position="start">$</InputAdornment>
+      )
+    }
+  }
+
   return (
     <div style={{ textAlign: "center" }}>
       <h2 style={savingsStyle}>Current savings: ${total.toFixed(2)}</h2>
@@ -73,58 +91,95 @@ const App = () => {
           : "You met your goal!"}
       </p>
       <div>
-        <select style={{marginRight: "10px",padding: "5px",borderRadius: "4px",border: "1px solid #ccc",}} onChange={(e) => setOption(e.target.value)}>
-          <option selected disabled>Select an option</option>
-          <option value='allowance'>Allowance</option>
-          <option value='expense'>Expense</option>
-        </select>
-        <label>
-          Amount:
-          <input
-            style={inputStyle}
-            value={option === 'allowance' ? allowance : expense}
+        <FormControl sx={{m: 1, minWidth: 130}}>
+          <InputLabel id="transaction-select-label">Type</InputLabel>
+          <Select
+            labelId="transaction-select-label"
+            id="transaction-select"
+            label="Transaction"
+            onChange={(e) => setOption(e.target.value)}
+            >
+            <MenuItem value="allowance">Allowance</MenuItem>
+            <MenuItem value="expense">Expense</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl sx={{m: 1, minWidth: 300}}>
+          <InputLabel htmlFor="amount">Amount</InputLabel>
+          <OutlinedInput
+            id="amount"
+            startAdornment={renderAdornment()}
+            label="Amount"
             type="number"
             min="0"
             max="100"
-            onChange={(e) => {option === 'allowance' ? setAllowance(e.target.value) : setExpense(e.target.value)}}
-            onKeyDown={(e) => handleKeyPress(e, "expense")}
+            value={option === "allowance" ? allowance : expense}
+            onChange={(e) => {
+              option === "allowance"
+                ? setAllowance(e.target.value)
+                : setExpense(e.target.value);
+            }}
+            onKeyDown={(e) => handleKeyPress(e)}
           />
-        </label>
-        <label>
-          Description:
-          <input
-            style={inputStyle}
-            value={description}
+        </FormControl>
+      </div>
+      <div>
+        <FormControl sx={{m: 1, minWidth: 445}}>
+          <InputLabel htmlFor="description">Description</InputLabel>
+          <OutlinedInput
+            id="description"
+            label="Description"
             type="text"
+            value={description}
             onChange={(e) => setDescription(e.target.value)}
-            onKeyDown={(e) => handleKeyPress(e, "allowance")}
+            onKeyDown={(e) => handleKeyPress(e)}
           />
-        </label>
-        <button type="button" onClick={newEntry}>
+        </FormControl>
+      </div>
+      <div>
+        <Button variant="contained" type="button" onClick={newEntry}>
           Enter
-        </button>
-        <div style={{paddingTop: "25px"}}>
-        <table style={tableStyles}>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Description</th>
-              <th>Debit</th>
-              <th>Credit</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transactions.map((transaction, index) => (
-              <tr key={index}>
-                {transactions.length > 0 ? <td>{new Date().toLocaleDateString()}</td> : <></>}
-                <td>{transaction.description}</td>
-                <td>{transaction.amount > 0 ? `$${transaction.amount.toFixed(2)}` : ""}</td>
-                <td>{transaction.amount < 0 ? `$${(transaction.amount * -1).toFixed(2)}` : ""}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        </div>
+        </Button>
+      </div>
+      <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+        <TableContainer component={Paper}>
+          <Table sx={{m:1, minWidth: 650}} size="small" aria-label="transaction">
+            <TableHead>
+              <TableRow>
+                <TableCell>Date</TableCell>
+                <TableCell>Description</TableCell>
+                <TableCell>Debit</TableCell>
+                <TableCell>Credit</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {transactions.map((transaction, index) => (
+                <TableRow
+                  key={index}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  {transactions.length > 0 ? (
+                    <TableCell component="th" scope="row">
+                      {new Date().toLocaleDateString()}
+                    </TableCell>
+                  ) : (
+                    <></>
+                  )}
+                  <TableCell>{transaction.description}</TableCell>
+                  <TableCell>
+                    {transaction.amount > 0
+                      ? `$${transaction.amount.toFixed(2)}`
+                      : ""}
+                  </TableCell>
+                  <TableCell>
+                    {transaction.amount < 0
+                      ? `$${(transaction.amount * -1).toFixed(2)}`
+                      : ""}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
     </div>
   );
