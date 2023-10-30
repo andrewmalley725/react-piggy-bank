@@ -62,6 +62,17 @@ const App = () => {
           </div>
         </div>
       </div>
+      <div className="centered-progress-container">
+        <div>
+          <p>Savings Goal Progress </p>
+        </div>
+        <div className="limited-progress-bar">
+          <ProgressBar completed={(total / GOAL) * 100} />
+        </div>
+        <div>
+          <p>{Math.round((total / GOAL) * 100)}%</p>
+        </div>
+      </div>
     </div>
   );
 };
