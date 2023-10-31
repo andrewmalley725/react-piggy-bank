@@ -98,11 +98,17 @@ const App = () => {
   return (
     <div style={{ textAlign: "center" }}>
       <h2 style={savingsStyle}>Current savings: ${total.toFixed(2)}</h2>
-      <p style={goalStatusStyle}>
-        {total < GOAL
-          ? `$${(GOAL - total).toFixed(2)} away from your goal`
-          : "You met your goal!"}
-      </p>
+      <div className="centered-progress-container">
+        <div>
+          <p>Savings Goal Progress </p>
+        </div>
+        <div className="limited-progress-bar">
+          <ProgressBar completed={(total / GOAL) * 100} />
+        </div>
+        <div>
+          <p>{Math.floor((total / GOAL) * 100)}% <i>(${total.toFixed(2)}/${GOAL})</i></p>
+        </div>
+      </div>
       <div>
         <FormControl sx={{ m: 1, minWidth: 130 }}>
           <InputLabel id="transaction-select-label">Type</InputLabel>
@@ -198,17 +204,7 @@ const App = () => {
           </Table>
         </TableContainer>
       </div>
-      <div className="centered-progress-container">
-        <div>
-          <p>Savings Goal Progress </p>
-        </div>
-        <div className="limited-progress-bar">
-          <ProgressBar completed={(total / GOAL) * 100} />
-        </div>
-        <div>
-          <p>{Math.round((total / GOAL) * 100)}%</p>
-        </div>
-      </div>
+      
     </div>
   );
 };
