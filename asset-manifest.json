@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/react-piggy-bank/static/css/main.1060e2e3.css",
-    "main.js": "/react-piggy-bank/static/js/main.6fb24325.js",
+    "main.css": "/react-piggy-bank/static/css/main.77ee4d37.css",
+    "main.js": "/react-piggy-bank/static/js/main.63b7d8ea.js",
     "static/media/roboto-latin-500-normal.woff2": "/react-piggy-bank/static/media/roboto-latin-500-normal.f25d774ecfe0996f8eb5.woff2",
     "static/media/roboto-latin-700-normal.woff2": "/react-piggy-bank/static/media/roboto-latin-700-normal.227c93190fe7f82de3f8.woff2",
     "static/media/roboto-latin-400-normal.woff2": "/react-piggy-bank/static/media/roboto-latin-400-normal.b009a76ad6afe4ebd301.woff2",
@@ -59,11 +59,11 @@
     "static/media/roboto-greek-ext-400-normal.woff": "/react-piggy-bank/static/media/roboto-greek-ext-400-normal.f708607d2a7290fb8bfa.woff",
     "static/media/roboto-greek-ext-700-normal.woff": "/react-piggy-bank/static/media/roboto-greek-ext-700-normal.249853776d22a271b2b5.woff",
     "index.html": "/react-piggy-bank/index.html",
-    "main.1060e2e3.css.map": "/react-piggy-bank/static/css/main.1060e2e3.css.map",
-    "main.6fb24325.js.map": "/react-piggy-bank/static/js/main.6fb24325.js.map"
+    "main.77ee4d37.css.map": "/react-piggy-bank/static/css/main.77ee4d37.css.map",
+    "main.63b7d8ea.js.map": "/react-piggy-bank/static/js/main.63b7d8ea.js.map"
   },
   "entrypoints": [
-    "static/css/main.1060e2e3.css",
-    "static/js/main.6fb24325.js"
+    "static/css/main.77ee4d37.css",
+    "static/js/main.63b7d8ea.js"
   ]
 }
