@@ -4,21 +4,19 @@ import {
   CssBaseline,
   Divider,
   Drawer,
-  InboxIcon,
   List,
   ListItem,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
-  MailIcon,
   Drawer as MuiDrawer,
   Toolbar,
   Typography,
 } from "@mui/material";
-import { React, useState } from "react";
+import { React } from "react";
 
 import AddTransactionInput from "./AddTransactionInput";
 import TransactionTable from "./TransactionTable";
+import Stats from "./Stats";
 
 const drawerWidth = 240;
 
@@ -26,6 +24,8 @@ const AppDrawer = (props) => {
   let {
     transactions,
     handleAddTransactionInput,
+    total,
+    goal
   } = props;
 
   return (
@@ -68,6 +68,7 @@ const AppDrawer = (props) => {
         sx={{ flexGrow: 1, bgColor: "background.default", p: 3 }}
       >
         <Toolbar />
+        <Stats total={total} goal={goal}/>
         <AddTransactionInput
           handleAddTransactionInput={handleAddTransactionInput}
         />
