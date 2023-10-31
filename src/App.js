@@ -58,33 +58,15 @@ const App = () => {
     }
   };
 
-  const tableStyles = {
-    border: "1px black solid",
-    margin: "0 auto",
-  };
-
   const savingsStyle = {
     fontSize: "24px",
     fontWeight: "bold",
-  };
-
-  const goalStatusStyle = {
-    fontSize: "18px",
-    color: total < GOAL ? "red" : "green",
   };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       newEntry();
     }
-  };
-
-  const inputStyle = {
-    width: "80px",
-    marginRight: "10px",
-    padding: "5px",
-    borderRadius: "4px",
-    border: "1px solid #ccc",
   };
 
   const renderAdornment = () => {
