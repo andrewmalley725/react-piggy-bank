@@ -34,11 +34,7 @@ const AddTransactionInput = (props) => {
     if (e.key === "Enter") {
       if (amount !== 0 && option !== '') {
         handleAddTransactionInput(description, amount, option);
-        setAmount(0);
-        setDescription('');
-      } else {
-        alert('Something is missing...');
-      }
+      } 
     }
   }
   
@@ -47,12 +43,16 @@ const AddTransactionInput = (props) => {
       handleAddTransactionInput(description, amount, option);
       setAmount(0);
       setDescription('');
+    } else {
+      alert('Something is missing...');
     }
   }
 
+  console.log(props)
   return (
     <div style={{ textAlign: "center" }}>
       <div>
+      
         <FormControl sx={{ m: 1, minWidth: 130 }}>
           <InputLabel id="transaction-select-label">Type</InputLabel>
           <Select
@@ -72,6 +72,7 @@ const AddTransactionInput = (props) => {
             startAdornment={renderAdornment()}
             label="Amount"
             type="number"
+            value={amount}
             onChange={(e) => {
               setAmount(e.target.value);
             }}
