@@ -45,6 +45,8 @@ const AddTransactionInput = (props) => {
   function handleClick(e) {
     if (amount !== 0 && option !== '') {
       handleAddTransactionInput(description, amount, option);
+      setAmount(0);
+      setDescription('');
     }
   }
 
