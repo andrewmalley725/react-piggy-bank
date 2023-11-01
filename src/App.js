@@ -29,7 +29,19 @@ const App = () => {
   
 
   return (
-    <div>
+    <div style={{ textAlign: "center" }}>
+      <h2 style={savingsStyle}>Current savings: ${total.toFixed(2)}</h2>
+      <div className="centered-progress-container">
+        <div>
+          <p>Savings Goal Progress </p>
+        </div>
+        <div className="limited-progress-bar">
+          <ProgressBar completed={(total / GOAL) * 100} />
+        </div>
+        <div>
+          <p>{Math.floor((total / GOAL) * 100)}% <i>(${total.toFixed(2)}/${GOAL})</i></p>
+        </div>
+      </div>
       <div>
         <AppDrawer
           transactions={transactions}
